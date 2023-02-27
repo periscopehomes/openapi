@@ -4,10 +4,10 @@ info:
   description: description
   version: 1.0.0
 servers:
-  - url: https://34.160.135.197.nip.io
+  - url: https://34.160.135.197.nip.io/apigee
     description: Optional server description, e.g. Main (production) server
 paths:
-  /apigee/json:
+  /json:
     get:
       operationId: getPerson
       description: Desc.
@@ -21,6 +21,7 @@ paths:
 components:
   schemas:
     Person:
+      type: object
       properties:
         firstName:
           type: string
