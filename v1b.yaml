@@ -7,7 +7,7 @@ servers:
   - url: https://34.160.135.197.nip.io
     description: Optional server description, e.g. Main (production) server
 paths:
-  /sites:
+  /odoo-sites/sites:
     get:
       operationId: getSites
       summary: Returns a list of sites.
