@@ -7,7 +7,7 @@ servers:
   - url: https://34.160.135.197.nip.io/apigee
     description: Optional server description, e.g. Main (production) server
 paths:
-  /json:
+  /json1:
     get:
       operationId: getPerson
       description: Desc.
