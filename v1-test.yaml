@@ -4,7 +4,7 @@ info:
   description: description
   version: 1.0.0
 paths:
-  /sites:
+  /sites1:
     get:
       operationId: getSites
       summary: Returns a list of sites.
