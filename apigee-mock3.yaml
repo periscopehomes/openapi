@@ -6,6 +6,8 @@ info:
 servers:
   - url: https://34.160.135.197.nip.io/apigee
     description: Optional server description, e.g. Main (production) server
+security:
+  - ApiKeyAuth: [] 
 paths:
   /json1:
     get:
@@ -31,3 +33,9 @@ components:
           type: string
         state:
           type: string
+
+  securitySchemes:
+    ApiKeyAuth:
+      type: apiKey
+      in: header
+      name: X-API-Key
