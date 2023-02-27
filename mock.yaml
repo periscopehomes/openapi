@@ -4,21 +4,6 @@ info:
   version: 1.0.0
   title: Mock Target API
 paths:
-  /:
-    get:
-      summary: View personalized greeting
-      operationId: View a personalized greeting
-      description: View a personalized greeting for the specified or guest user.
-      parameters:
-        - name: user
-          in: query
-          description: Your user name.
-          required: false
-          schema:
-            type: string
-      responses:
-        "200":
-          description: Success
   /help:
     get:
       summary: Get help
