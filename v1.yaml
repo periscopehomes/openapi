@@ -4,7 +4,7 @@ info:
   description: description
   version: 1.0.0
 servers:
-  - url: https://34.160.135.197.nip.io/odoo-sites
+  - url: https://34.160.135.197.nip.io
     description: Optional server description, e.g. Main (production) server
 paths:
   /sites:
