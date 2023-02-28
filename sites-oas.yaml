@@ -5,10 +5,8 @@ info:
   description: description
   version: 1.0.0
 servers:
-  #- url: https://34.160.135.197.nip.io
-  - url: https://periscopehomes-feature-normalize-api-7397245.dev.odoo.com/periscope
-    description: Optional server description, e.g. Main (production) server
-
+- url: https://34.160.135.197.nip.io/odoo-appsheet-api
+#- url: https://periscopehomes-feature-normalize-api-7397245.dev.odoo.com/periscope
 paths:
   "/sites":
     get:
@@ -58,54 +56,6 @@ paths:
             application/json:
               schema:
                 "$ref": "#/components/schemas/ErrorResponse"
-  "/pallets":
-    get:
-      tags:
-      - Pallet
-      description: Return list of pallets.
-      summary: Returns list of existing pallets.
-      operationId: getPallets
-      parameters:
-      - "$ref": "#/components/parameters/limit"
-      - "$ref": "#/components/parameters/offset"
-      - "$ref": "#/components/parameters/orderBy"
-      - "$ref": "#/components/parameters/order"
-      - "$ref": "#/components/parameters/select"
-      responses:
-        '200':
-          description: Success
-          content:
-            application/json:
-              schema:
-                "$ref": "#/components/schemas/PalletsResponse"
-        '400':
-          description: Error
-          content:
-            application/json:
-              schema:
-                "$ref": "#/components/schemas/ErrorResponse"
-  "/pallets/{id}":
-    get:
-      tags:
-      - Pallet
-      description: Return pallet details.
-      summary: Return details for an existing pallet.
-      operationId: getPallet
-      parameters:
-      - "$ref": "#/components/parameters/palletIdPath"
-      responses:
-        '200':
-          description: Success
-          content:
-            application/json:
-              schema:
-                "$ref": "#/components/schemas/PalletResponse"
-        '400':
-          description: Error
-          content:
-            application/json:
-              schema:
-                "$ref": "#/components/schemas/ErrorResponse"
 
 security:
 - ApiKeyAuth: []
@@ -120,14 +70,6 @@ components:
       in: path
       name: id
       description: The site identifier.
-      required: true
-      schema:
-        type: integer
-        format: int64
-    palletIdPath:
-      in: path
-      name: id
-      description: The pallet identifier.
       required: true
       schema:
         type: integer
@@ -195,30 +137,6 @@ components:
           type: array
           items:
             "$ref": "#/components/schemas/Site"
-    Pallet:
-      additionalProperties: false
-      properties:
-        id:
-          type: integer
-          format: int64
-        name:
-          type: string
-        description:
-          type: string
-        site_id:
-          type: integer
-          format: int64
-        site:
-          "$ref": "#/components/schemas/Site"
-    PalletResponse:
-      "$ref": "#/components/schemas/Pallet"
-    PalletsResponse:
-      type: object
-      properties:
-        persons:
-          type: array
-          items:
-            "$ref": "#/components/schemas/Pallet"
     Error:
       type: object
       properties:
