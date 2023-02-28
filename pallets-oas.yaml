@@ -5,8 +5,8 @@ info:
   description: description
   version: 1.0.0
 servers:
-- url: https://34.160.135.197.nip.io/odoo-appsheet-api
-#- url: https://periscopehomes-feature-normalize-api-7397245.dev.odoo.com/periscope
+#- url: https://34.160.135.197.nip.io
+- url: https://periscopehomes-feature-normalize-api-7397245.dev.odoo.com/periscope
 paths:
   "/sites":
     get:
@@ -204,7 +204,7 @@ components:
         description:
           type: string
         site:
-          type: object
+          "$ref": "#/components/schemas/Site"
     PalletResponse:
       "$ref": "#/components/schemas/Pallet"
     PalletsResponse:
