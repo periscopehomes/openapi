@@ -31,3 +31,317 @@ components:
       type: array
       items:
         $ref: "#/components/schemas/Site"
+
+
+
+---
+openapi: 3.0.0
+info:
+  version: 1.0.0
+  title: Persons Design Pattern
+  description: Shows Persons collection RESTful design pattern, with paging query
+    params. Uses Big Query as target and can be used by Appsheet.
+servers:
+- url: https://api.kurtkanaskie.net/bqc/v1
+paths:
+  "/oas.json":
+    get:
+      tags:
+      - OAS
+      description: Return the OAS in JSON.
+      summary: Returns the OAS in JSON.
+      operationId: getPersons
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema: {}
+  "/persons":
+    get:
+      tags:
+      - Person
+      description: Return list of persons.
+      summary: Returns list of existing persons.
+      operationId: getPersons
+      parameters:
+      - "$ref": "#/components/parameters/limit"
+      - "$ref": "#/components/parameters/offset"
+      - "$ref": "#/components/parameters/orderBy"
+      - "$ref": "#/components/parameters/order"
+      - "$ref": "#/components/parameters/select"
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/PersonsResponse"
+        '400':
+          description: Error
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/ErrorResponse"
+    post:
+      tags:
+      - Person
+      description: Create Person
+      summary: Create a new person.
+      operationId: createPerson
+      requestBody:
+        content:
+          application/json:
+            schema:
+              "$ref": "#/components/schemas/PersonCreateRequest"
+        required: true
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/PersonResponse"
+        '400':
+          description: Error
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/ErrorResponse"
+  "/persons/{id}":
+    get:
+      tags:
+      - Person
+      description: Return person details.
+      summary: Return details for an existing person.
+      operationId: getPerson
+      parameters:
+      - "$ref": "#/components/parameters/personIdPath"
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/PersonResponse"
+        '400':
+          description: Error
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/ErrorResponse"
+    put:
+      tags:
+      - Person
+      description: Update Person completely
+      summary: Update an existing person.
+      operationId: updatePerson
+      parameters:
+      - "$ref": "#/components/parameters/personIdPath"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              "$ref": "#/components/schemas/PersonUpdateRequest"
+        required: true
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/PersonResponse"
+        '400':
+          description: Error
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/ErrorResponse"
+    delete:
+      tags:
+      - Person
+      description: Delete person.
+      summary: Delete an existing person.
+      operationId: deletePerson
+      parameters:
+      - "$ref": "#/components/parameters/personIdPath"
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/PersonResponse"
+        '400':
+          description: Error
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/ErrorResponse"
+security:
+- ApiKeyAuth: []
+components:
+  securitySchemes:
+    ApiKeyAuth:
+      type: apiKey
+      in: header
+      name: X-APIKey
+  parameters:
+    personIdPath:
+      in: path
+      name: id
+      description: The person identifier.
+      required: true
+      schema:
+        type: string
+    offset:
+      in: query
+      name: offset
+      description: The offset into the table to start the response, if omitted default
+        is 0.
+      required: false
+      schema:
+        type: number
+        default: 0
+    limit:
+      in: query
+      name: limit
+      description: The number of entries to return, if omitted default is 100.
+      required: false
+      schema:
+        type: number
+        default: 100
+    orderBy:
+      in: query
+      name: orderBy
+      description: Order the results by the provided field name.
+      required: false
+      schema:
+        type: string
+        default: id
+    order:
+      in: query
+      name: order
+      description: Order the results by either ascending or descending.
+      required: false
+      schema:
+        type: string
+        enum:
+        - asc
+        - desc
+    select:
+      in: query
+      name: select
+      description: Specify the comma separated fields to return.
+      required: false
+      schema:
+        type: string
+        default: "*"
+  schemas:
+    PersonCreateRequest:
+      type: object
+      required:
+      - id
+      - company
+      - firstName
+      - lastName
+      - preferredName
+      additionalProperties: false
+      properties:
+        id:
+          type: string
+        firstName:
+          type: string
+        lastName:
+          type: string
+        preferredName:
+          type: string
+        company:
+          type: string
+        jobTitle:
+          type: string
+        workAddress:
+          type: string
+        workPhone:
+          type: string
+        workEmail:
+          type: string
+    PersonUpdateRequest:
+      type: object
+      required:
+      - id
+      - company
+      - firstName
+      - lastName
+      - preferredName
+      - workEmail
+      - workPhone
+      additionalProperties: false
+      properties:
+        id:
+          type: string
+        firstName:
+          type: string
+        lastName:
+          type: string
+        preferredName:
+          type: string
+        company:
+          type: string
+        jobTitle:
+          type: string
+        workAddress:
+          type: string
+        workPhone:
+          type: string
+        workEmail:
+          type: string
+    Person:
+      additionalProperties: false
+      properties:
+        id:
+          type: string
+        uuid:
+          type: string
+        firstName:
+          type: string
+        lastName:
+          type: string
+        preferredName:
+          type: string
+        company:
+          type: string
+        jobTitle:
+          type: string
+        workAddress:
+          type: string
+        workPhone:
+          type: string
+        workEmail:
+          type: string
+    PersonResponse:
+      "$ref": "#/components/schemas/Person"
+    PersonsResponse:
+      type: object
+      properties:
+        persons:
+          type: array
+          items:
+            "$ref": "#/components/schemas/Person"
+    Error:
+      type: object
+      properties:
+        code:
+          type: string
+        userMessage:
+          type: string
+        systemMessage:
+          type: string
+    ErrorResponse:
+      type: object
+      properties:
+        error:
+          description: Used to pass error information in a response.
+          type: array
+          items:
+            "$ref": "#/components/schemas/Error"
